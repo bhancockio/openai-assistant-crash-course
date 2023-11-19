@@ -17,7 +17,7 @@ export async function GET() {
 
     console.log(assistant);
 
-    return Response.json(assistant);
+    return Response.json({ assistant: assistant });
   } catch (e) {
     console.log(e);
     return Response.json({ error: e });

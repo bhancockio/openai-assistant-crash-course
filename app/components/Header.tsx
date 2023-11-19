@@ -11,18 +11,22 @@ function Header() {
   const [runState] = useAtom(runStateAtom);
 
   return (
-    <div className="flex flex-row justify-around text-2xl font-semibold">
-      <div>
-        Assistant: <span className="text-blue-500">{assistant?.id}</span>
+    <div className="flex flex-row justify-between text-xl font-semibold">
+      <div className="flex-1 flex flex-col items-center">
+        <span>Assistant:</span>
+        <span className="text-blue-500">{assistant?.id}</span>
       </div>
-      <div>
-        File: <span className="text-blue-500">{file?.name}</span>
+      <div className="flex-1 flex flex-col items-center">
+        <span>File:</span>
+        <span className="text-blue-500">{file?.name}</span>
       </div>
-      <div>
-        Thread: <span className="text-blue-500">{thread?.id}</span>
+      <div className="flex-1 flex flex-col items-center">
+        <span>Thread:</span>
+        <span className="text-blue-500">{thread?.id}</span>
       </div>
-      <div>
-        Run State: <span className="text-blue-500">{runState}</span>
+      <div className="flex-1 flex flex-col items-center">
+        <span>Run State:</span>
+        <span className="text-blue-500">{runState}</span>
       </div>
     </div>
   );

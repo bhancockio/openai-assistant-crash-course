@@ -1,3 +1,5 @@
+import formidable from "formidable";
+import { Readable } from "stream";
 import { NextRequest } from "next/server";
 import OpenAI from "openai";
 
@@ -9,8 +11,11 @@ export const config = {
 
 export async function POST(request: NextRequest) {
   try {
-    const requestBody = await request.json();
+    console.log("POST /api/file/upload");
+    const requestBody = (await request.json()) as { file: string };
     const base64Data = requestBody.file;
+
+    console.log("Base64 data: ", base64Data?.substring(0, 100) + "...");
 
     if (!base64Data)
       return Response.json({ error: "No file provided" }, { status: 400 });
@@ -33,11 +38,38 @@ export async function POST(request: NextRequest) {
 
     console.log(file);
 
-    return Response.json(file);
+    return Response.json({ file: file });
   } catch (e) {
     console.log(e);
-    return Response.json({ error: e });
+    return Response.json({ error: e }, { status: 500 });
   }
+}
+
+async function parseFormData(req: NextRequest) {
+  return new Promise((resolve, reject) => {
+    const form = new formidable.IncomingForm();
+
+    if (req.body) {
+      const reqStream = new ReadableStream({
+        async start(controller) {
+          const reader = req.body?.getReader();
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            controller.enqueue(value);
+          }
+          controller.close();
+        },
+      });
+
+      form.parse(reqStream, (err, fields, files) => {
+        if (err) reject(err);
+        resolve({ fields, files });
+      });
+    } else {
+      reject(new Error("No request body"));
+    }
+  });
 }
 
 // Helper function to convert Base64 to Blob
