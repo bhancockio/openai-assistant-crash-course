@@ -12,6 +12,7 @@ import {
   threadAtom,
   RunState,
   isValidRunState,
+  assistantFileAtom,
 } from "@/atom";
 import Thread from "./components/Thread";
 import Run from "./components/Run";
@@ -20,6 +21,7 @@ export default function Home() {
   // Atom State
   const [, setAssistant] = useAtom(assistantAtom);
   const [, setFile] = useAtom(fileAtom);
+  const [, setAssistantFile] = useAtom(assistantFileAtom);
   const [, setThread] = useAtom(threadAtom);
   const [, setRunState] = useAtom(runStateAtom);
 
@@ -33,6 +35,10 @@ export default function Home() {
       const localFile = localStorage.getItem("file");
       if (localFile) {
         setFile(localFile);
+      }
+      const localAssistantFile = localStorage.getItem("assistantFile");
+      if (localAssistantFile) {
+        setAssistantFile(localAssistantFile);
       }
       const localThread = localStorage.getItem("thread");
       if (localThread) {
