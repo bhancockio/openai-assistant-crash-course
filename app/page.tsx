@@ -16,6 +16,7 @@ import {
 } from "@/atom";
 import Thread from "./components/Thread";
 import Run from "./components/Run";
+import ChatContainer from "./components/ChatContainer";
 
 export default function Home() {
   // Atom State
@@ -64,7 +65,7 @@ export default function Home() {
         </div>
         {/* Chat */}
         <div className="w-full">
-          <p>Chat here</p>
+          <ChatContainer />
         </div>
       </div>
     </main>
