@@ -1,4 +1,3 @@
-import { NextRequest } from "next/server";
 import OpenAI from "openai";
 
 export async function GET() {
@@ -9,7 +8,7 @@ export async function GET() {
 
     console.log(thread);
 
-    return Response.json(thread);
+    return Response.json({ thread: thread });
   } catch (e) {
     console.log(e);
     return Response.json({ error: e });

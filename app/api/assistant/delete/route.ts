@@ -3,14 +3,15 @@ import OpenAI from "openai";
 
 export async function GET(request: NextRequest) {
   const searchParams = request.nextUrl.searchParams;
-  const id = searchParams.get("id");
+  const assistantId = searchParams.get("assistantId");
 
-  if (!id) return Response.json({ error: "No id provided" }, { status: 400 });
+  if (!assistantId)
+    return Response.json({ error: "No id provided" }, { status: 400 });
 
   const openai = new OpenAI();
 
   try {
-    const response = await openai.beta.assistants.del(id);
+    const response = await openai.beta.assistants.del(assistantId);
 
     console.log(response);
 

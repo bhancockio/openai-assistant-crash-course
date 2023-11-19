@@ -45,7 +45,7 @@ function Assistant() {
     setModifying(true);
     try {
       const response = await axios.get<{ assistant: Assistant }>(
-        `/api/assistant/modify?id=${assistant?.id}&fileId=${file}`
+        `/api/assistant/modify?assistantId=${assistant?.id}&fileId=${file}`
       );
 
       const newAssistant = response.data.assistant;
@@ -89,7 +89,7 @@ function Assistant() {
   const handleDelete = async () => {
     setDeleting(true);
     try {
-      await axios.get(`/api/assistant/delete?id=${assistant?.id}`);
+      await axios.get(`/api/assistant/delete?assistantId=${assistant?.id}`);
 
       setAssistant(null);
       localStorage.removeItem("assistant");
