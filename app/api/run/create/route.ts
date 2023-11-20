@@ -17,13 +17,13 @@ export async function GET(request: NextRequest) {
   const openai = new OpenAI();
 
   try {
-    const thread = await openai.beta.threads.runs.create(threadId, {
+    const run = await openai.beta.threads.runs.create(threadId, {
       assistant_id: assistantId,
     });
 
-    console.log(thread);
+    console.log({ run: run });
 
-    return Response.json(thread);
+    return Response.json({ run: run });
   } catch (e) {
     console.log(e);
     return Response.json({ error: e });

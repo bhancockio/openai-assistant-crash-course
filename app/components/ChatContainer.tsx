@@ -1,4 +1,4 @@
-import { threadAtom } from "@/atom";
+import { messagesAtom, threadAtom } from "@/atom";
 import axios from "axios";
 import { useAtom } from "jotai";
 import { ThreadMessage } from "openai/resources/beta/threads/messages/messages.mjs";
@@ -8,9 +8,9 @@ import toast from "react-hot-toast";
 function ChatContainer() {
   // Atom State
   const [thread] = useAtom(threadAtom);
+  const [messages, setMessages] = useAtom(messagesAtom);
 
   // State
-  const [messages, setMessages] = useState<ThreadMessage[]>([]);
   const [message, setMessage] = useState("");
   const [sending, setSending] = useState(false);
   const [fetching, setFetching] = useState(false);
@@ -26,8 +26,14 @@ function ChatContainer() {
             `/api/message/list?threadId=${thread.id}`
           )
           .then((response) => {
-            const newMessages = response.data.messages;
-            console.log("newMessages", newMessages);
+            let newMessages = response.data.messages;
+
+            // Sort messages in descending order by createdAt
+            newMessages = newMessages.sort(
+              (a, b) =>
+                new Date(a.created_at).getTime() -
+                new Date(b.created_at).getTime()
+            );
             setMessages(newMessages);
           });
       } catch (error) {
@@ -76,8 +82,10 @@ function ChatContainer() {
         {messages.map((message) => (
           <div
             key={message.id}
-            className={`px-4 py-2 rounded-lg text-white w-fit min-w-[350px] ${
-              message.role === "user" ? " bg-blue-500 ml-auto" : " bg-gray-500"
+            className={`px-4 py-2 mb-3 rounded-lg text-white w-fit text-lg ${
+              message.role === "user"
+                ? " bg-blue-500 ml-auto text-right"
+                : " bg-gray-500"
             }`}
           >
             {message.content[0].type === "text"

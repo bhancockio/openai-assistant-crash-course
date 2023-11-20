@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
 
     console.log(run);
 
-    return Response.json(run);
+    return Response.json({ run: run });
   } catch (e) {
     console.log(e);
     return Response.json({ error: e });
