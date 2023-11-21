@@ -91,12 +91,12 @@ function Run() {
   };
 
   const handleCancel = async () => {
-    if (!run) return;
+    if (!run || !thread) return;
 
     setCanceling(true);
     try {
       const response = await axios.get<{ run: Run }>(
-        `/api/run/cancel?runId=${run.id}`
+        `/api/run/cancel?runId=${run.id}&threadId=${thread.id}`
       );
 
       const newRun = response.data.run;
