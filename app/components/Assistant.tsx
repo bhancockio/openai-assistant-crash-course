@@ -1,6 +1,6 @@
 "use client";
 
-import { assistantAtom, fileAtom } from "@/atom";
+import { assistantAtom, fileAtom, messagesAtom } from "@/atom";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { useAtom } from "jotai";
@@ -11,6 +11,7 @@ import toast from "react-hot-toast";
 function Assistant() {
   // Atom State
   const [assistant, setAssistant] = useAtom(assistantAtom);
+  const [, setMessages] = useAtom(messagesAtom);
   const [file] = useAtom(fileAtom);
 
   // State
@@ -96,6 +97,7 @@ function Assistant() {
       toast.success("Successfully deleted assistant", {
         position: "bottom-center",
       });
+      setMessages([]);
     } catch (error) {
       console.log("error", error);
       toast.error("Error deleting assistant", { position: "bottom-center" });

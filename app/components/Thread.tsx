@@ -1,6 +1,6 @@
 "use client";
 
-import { threadAtom } from "@/atom";
+import { messagesAtom, threadAtom } from "@/atom";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { useAtom } from "jotai";
@@ -11,6 +11,7 @@ import toast from "react-hot-toast";
 function Thread() {
   // Atom State
   const [thread, setThread] = useAtom(threadAtom);
+  const [, setMessages] = useAtom(messagesAtom);
 
   // State
   const [creating, setCreating] = useState(false);
@@ -50,6 +51,7 @@ function Thread() {
       console.log("response", deletedThread);
       setThread(null);
       localStorage.removeItem("thread");
+      setMessages([]);
       toast.success("Successfully deleted thread", {
         position: "bottom-center",
       });

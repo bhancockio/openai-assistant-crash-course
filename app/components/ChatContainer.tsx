@@ -59,6 +59,7 @@ function ChatContainer() {
 
       const newMessage = response.data.message;
       console.log("newMessage", newMessage);
+      setMessages([...messages, newMessage]);
       setMessage("");
       toast.success("Successfully sent message", {
         position: "bottom-center",
@@ -72,9 +73,9 @@ function ChatContainer() {
   };
 
   return (
-    <div className="flex flex-col w-full h-full rounded-lg border-blue-200 border-solid border-2 p-10">
+    <div className="flex flex-col w-full h-full max-h-screen rounded-lg border-blue-200 border-solid border-2 p-10">
       {/* Messages */}
-      <div className="flex flex-col h-full border-blue-200 border-solid border-2 p-6 rounded-lg overflow-y-auto">
+      <div className="flex flex-col h-full max-h-[calc(100vh-400px)] overflow-y-auto border-blue-200 border-solid border-2 p-6 rounded-lg">
         {fetching && <div className="m-auto font-bold">Fetching messages.</div>}
         {!fetching && messages.length === 0 && (
           <div className="m-auto font-bold">No messages found for thread.</div>

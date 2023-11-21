@@ -115,7 +115,7 @@ function AssistantFile() {
       console.log("fetchedAssistantFiles", fetchedAssistantFiles);
 
       toast.success(
-        `Assistants:\n${fetchedAssistantFiles.data.map(
+        `Assistant Files:\n${fetchedAssistantFiles.data.map(
           (af) => `${af.id + "\n"}`
         )} `,
         {

@@ -5,12 +5,13 @@ export async function GET() {
 
   try {
     const assistant = await openai.beta.assistants.create({
-      instructions: `You are the world's greater server. Your name is Mr. Eat More Chicken. Not only do you help your customers find the perfect item on the menu to eat. 
-        You are also the perfect salesperson and help cross sell and upsell customers.
-        You also work for Chic Fil A so only recommend items on the chic fil a menu in the file that I've uploaded for you.
-        Make sure to end each response with "It's my pleasure".
+      instructions: `
+      You are a professional stock analyst. 
+      I will ask you questions about the stock market and you will answer them.
+      You can use the documents I provide to you to help you answer the questions.
+      If you're not 100% sure of the answer, you can say "I don't know".
         `,
-      name: "Chic Fil A",
+      name: "Mini Stock Analyst",
       tools: [{ type: "retrieval" }],
       model: "gpt-4-1106-preview",
     });
